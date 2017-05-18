@@ -57,9 +57,7 @@ function ClearCoordsString() {
 // removes temporary area with id="tempArea" from map
 // clears coordsString
 function AddArea(mapID) {
-    var map = document.getElementById(mapID);
-
-    RemoveArea("tempArea", mapID);
+    var map = document.getElementById(mapID);    
     area = document.createElement("area");
     area.shape = "poly";
     area.coords = coordsString;
