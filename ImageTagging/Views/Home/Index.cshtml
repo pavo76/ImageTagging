@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<h1>Application for testing out the image taggin logic</h1>
+<div>
+    <img id="slika" class="map" usemap="#map" onclick="imageOnClick()" src="http://images.all-free-download.com/images/graphiclarge/beautiful_scenery_04_hd_pictures_166258.jpg" />
+</div>
+
+<map id="map" name="map">
+</map>
+
+<br />
+<button id="btnClear" onclick="ClearCoordsString()">Očisti</button>
+<button id="btnDodaj" onclick="AddArea('map')">Dodaj</button>
+
+
+
+
+
+<script src="~/Scripts/ImageClick.js"></script>
