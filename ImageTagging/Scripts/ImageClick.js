@@ -2,17 +2,32 @@
 var coordsString = "";
 // variable for naming id of new area element
 var areaIDIndex = 0;
+// variable for checking wether tag should be polygon or circle
+var tagFormatPoly = true;
+// variables for determining center and radius of a circle tag
+var circleX = 0;
+var circleY = 0;
+var circleRadius = 100;
 
 // adds coordinates of clicked position in image to the coordsString variable
 // adds temporary area if temporary area with id="tempArea" doesn't exist
 // else it adds new coordinates to temporary area
 function imageOnClick(eventRef) {
     var posObject = getEventLocation(eventRef);
-    if (coordsString == "") {
-        coordsString = posObject.x + ", " + posObject.y;
+    if (tagFormatPoly)
+    {
+        if (coordsString == "") {
+            coordsString = posObject.x + ", " + posObject.y;
+        }
+        else if (coordsString != "") {
+            coordsString = coordsString + ", " + posObject.x + ", " + posObject.y
+        }
     }
-    else if (coordsString != "") {
-        coordsString = coordsString + ", " + posObject.x + ", " + posObject.y
+    else if (!tagFormatPoly)
+    {
+        circleX = posObject.x;
+        circleY = posObject.y;
+        coordsString = circleX + ", " + circleY + ", " + circleRadius;
     }
     if (!CheckIfAreaExists("tempArea")) {
         AddTempArea("map")
@@ -20,6 +35,7 @@ function imageOnClick(eventRef) {
     else if (CheckIfAreaExists("tempArea")) {
         EditTempArea();
     }
+
 }
 
 // returns coordinates of position in image where mouse was clicked
@@ -66,9 +82,13 @@ function ClearCoordsString() {
 function AddArea(mapID) {
     var map = document.getElementById(mapID);    
     area = document.createElement("area");
-    area.shape = "poly";
+    if (tagFormatPoly) {
+        area.shape = "poly";
+    }
+    else if (!tagFormatPoly) {
+        area.shape = "circle";
+    }
     area.coords = coordsString;
-    area.href = "#";
     area.title = "da";
     area.alt = "da";
     var areaID = "area" + areaIDIndex;
@@ -84,7 +104,10 @@ function AddArea(mapID) {
 //  removes area with id="areaID" from map with id="mapID""
 function RemoveArea(areaID, mapID) {
     var map = document.getElementById(mapID);
-    map.removeChild(document.getElementById(areaID))
+    var areaExists = !!document.getElementById(areaID);
+    if (areaExists) {
+        map.removeChild(document.getElementById(areaID));
+    }
 }
 
 // checks if an area element with id="areaID" exists
@@ -103,9 +126,15 @@ function AddTempArea(mapID) {
     var map = document.getElementById(mapID);
 
     area = document.createElement("area");
-    area.shape = "poly";
+    if (tagFormatPoly)
+    {
+        area.shape = "poly";
+    }
+    else if (!tagFormatPoly)
+    {
+        area.shape = "circle";
+    }
     area.coords = coordsString;
-    area.href = "#";
     area.title = "da";
     area.alt = "da";
     area.setAttribute("id", "tempArea");
@@ -136,3 +165,44 @@ function Hilight() {
     });
 }
 
+
+// Switches between tagging with polygon and tagging with circle
+// Clears CoordsString on switch
+function ChangeTagFormat()
+{
+    var button = document.getElementById("btnChangeTagFormat");
+    tagFormatPoly = !tagFormatPoly;
+    ClearCoordsString();
+    if (tagFormatPoly)
+    {
+        button.setAttribute("value", "Circle");
+    }
+    else
+    {
+        button.setAttribute("value", "Polygon");
+    }
+    ShowRadiusInput();
+}
+
+function ShowRadiusInput()
+{
+    if (tagFormatPoly) {
+        document.getElementById("radiusDiv").style.visibility = "hidden";
+    }
+    if (!tagFormatPoly) {
+        document.getElementById("radiusDiv").style.visibility = "visible";
+    }
+}
+
+function ChangeRadius()
+{
+    var radius=document.getElementById("nmbRadius").value;
+    circleRadius = radius;
+    coordsString = circleX + ", " + circleY + ", " + circleRadius;
+    if (!CheckIfAreaExists("tempArea")) {
+        AddTempArea("map")
+    }
+    else if (CheckIfAreaExists("tempArea")) {
+        EditTempArea();
+    }
+}

@@ -2,20 +2,34 @@
     ViewBag.Title = "Home Page";
 }
 
-<h1>Application for testing out the image taggin logic</h1>
-<div>
-    <img id="slika" class="map" usemap="#map" onClick="imageOnClick(event); return false" onmousedown="return false" src="http://images.all-free-download.com/images/graphiclarge/beautiful_scenery_04_hd_pictures_166258.jpg" />
+<h1>Click on the image to set tag area coordinates</h1>
+<div class="row">
+    <div class="col-md-7">
+        <img id="slika" class="map" usemap="#map" onClick="imageOnClick(event)"  onmousedown="return false" src="http://images.all-free-download.com/images/graphiclarge/beautiful_scenery_04_hd_pictures_166258.jpg" />
+    </div>
+
+    <map id="map" name="map"></map>
+
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col-md-6">Clear current input:</div>
+            <input class="col-md-3" type="button" id="btnClear" onclick="ClearCoordsString()" value="Clear" />
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-6">Add current area to the image:</div>
+            <input class="col-md-3" type="button" id="btnAdd" onclick="AddArea('map')" value="Add Area" />
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-6">Change tag format to:</div>
+            <input class="col-md-3" type="button" id="btnChangeTagFormat" onclick="ChangeTagFormat()" value="Circle" />           
+        </div>
+        <br/>
+        <div class="row" id="radiusDiv" style="visibility:hidden">
+            <div class="col-md-6">Adjust radius of circle tag:</div>
+            <input class="col-md-3" type="number" id="nmbRadius" min="5" onchange="ChangeRadius()" name="radius" value="100" step="5"/>
+        </div>
+    </div>
 </div>
-
-<map id="map" name="map">
-</map>
-
-<br />
-<button id="btnClear" onclick="ClearCoordsString()">Očisti</button>
-<button id="btnDodaj" onclick="AddArea('map')">Dodaj</button>
-
-
-
-
-
 <script src="~/Scripts/ImageClick.js"></script>
