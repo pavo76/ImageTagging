@@ -1,4 +1,7 @@
-﻿// variable for storing pressed coordinates
+﻿// Script enables tagging parts of the image with polygons and circles
+// Using maphilight jquery plugin, it shows the tagged area
+
+// variable for storing pressed coordinates
 var coordsString = "";
 // variable for naming id of new area element
 var areaIDIndex = 0;
@@ -9,7 +12,9 @@ var circleX = 0;
 var circleY = 0;
 var circleRadius = 100;
 
-// adds coordinates of clicked position in image to the coordsString variable
+// check if tag format is polygon or circle
+// if polygon, adds coordinates of clicked position in image to the coordsString variable
+// if circle, it changes the coordinates of the circle and changes coordsString accordingly
 // adds temporary area if temporary area with id="tempArea" doesn't exist
 // else it adds new coordinates to temporary area
 function imageOnClick(eventRef) {
@@ -70,11 +75,10 @@ function getEventLocation(eventRef) {
 // Clears variable coordsString and removes temporary area
 function ClearCoordsString() {
     coordsString = "";
-    RemoveArea("tempArea", "map");
-    Hilight();
 }
 
 // adds Area child element to map with id="mapID"
+// depending on the tag format, area type is circle or poly
 // id of Area is set to area + areaIDIndex 
 // areaIDIndex autoincrements for each area added
 // removes temporary area with id="tempArea" from map
@@ -89,6 +93,7 @@ function AddArea(mapID) {
         area.shape = "circle";
     }
     area.coords = coordsString;
+    // test values, can be adjusted later
     area.title = "da";
     area.alt = "da";
     var areaID = "area" + areaIDIndex;
@@ -96,16 +101,15 @@ function AddArea(mapID) {
     map.appendChild(area);
 
     areaIDIndex += 1;
-    ClearCoordsString();
+    ClearTempArea();
     Hilight();
 }
 
 
-//  removes area with id="areaID" from map with id="mapID""
+//  removes area with id="areaID" from map with id="mapID" if it exists
 function RemoveArea(areaID, mapID) {
     var map = document.getElementById(mapID);
-    var areaExists = !!document.getElementById(areaID);
-    if (areaExists) {
+    if (CheckIfAreaExists(areaID)) {
         map.removeChild(document.getElementById(areaID));
     }
 }
@@ -118,10 +122,13 @@ function CheckIfAreaExists(areaID) {
         return true;
     }
     else
+    {
         return false;
+    }
 }
 
 // adds temporary area with id="tempArea" on map with id="mapID"
+// depending on the tag format, area type is circle or poly
 function AddTempArea(mapID) {
     var map = document.getElementById(mapID);
 
@@ -135,6 +142,7 @@ function AddTempArea(mapID) {
         area.shape = "circle";
     }
     area.coords = coordsString;
+    // test values, can be adjusted later
     area.title = "da";
     area.alt = "da";
     area.setAttribute("id", "tempArea");
@@ -147,6 +155,14 @@ function AddTempArea(mapID) {
 function EditTempArea() {
     var area = document.getElementById("tempArea");
     area.coords = coordsString;
+    Hilight();
+}
+
+// removes the temporary area
+function ClearTempArea()
+{
+    ClearCoordsString();
+    RemoveArea("tempArea", "map");
     Hilight();
 }
 
@@ -167,12 +183,12 @@ function Hilight() {
 
 
 // Switches between tagging with polygon and tagging with circle
-// Clears CoordsString on switch
+// Clears temporary area on switch
 function ChangeTagFormat()
 {
     var button = document.getElementById("btnChangeTagFormat");
     tagFormatPoly = !tagFormatPoly;
-    ClearCoordsString();
+    ClearTempArea();
     if (tagFormatPoly)
     {
         button.setAttribute("value", "Circle");
@@ -184,6 +200,7 @@ function ChangeTagFormat()
     ShowRadiusInput();
 }
 
+// Toggles visibility of the input for adjusting radius of circle tag
 function ShowRadiusInput()
 {
     if (tagFormatPoly) {
@@ -194,15 +211,13 @@ function ShowRadiusInput()
     }
 }
 
+// Changes the area of circle tag to match the adjusted radius
 function ChangeRadius()
 {
     var radius=document.getElementById("nmbRadius").value;
     circleRadius = radius;
     coordsString = circleX + ", " + circleY + ", " + circleRadius;
-    if (!CheckIfAreaExists("tempArea")) {
-        AddTempArea("map")
-    }
-    else if (CheckIfAreaExists("tempArea")) {
+    if (CheckIfAreaExists("tempArea")) {
         EditTempArea();
     }
 }
