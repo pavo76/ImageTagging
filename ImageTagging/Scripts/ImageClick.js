@@ -30,7 +30,14 @@ function getEventLocation(eventRef) {
     var offset = $img.offset();
     if (eventRef.pageX) {
         positionX = eventRef.pageX - offset.left;
+        if (positionX < 0)
+        {
+            positionX = 0;
+        }
         positionY = eventRef.pageY - offset.top;
+        if (positionY < 0) {
+            positionY = 0;
+        }
     }
     else if (window.event) {
         positionX = eventRef.clientX + document.body.scrollLeft;
