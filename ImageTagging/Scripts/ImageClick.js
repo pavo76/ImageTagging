@@ -44,7 +44,7 @@ function getEventLocation(eventRef) {
     return { x: positionX, y: positionY };
 }
 
-// Clears variable coordsString
+// Clears variable coordsString and removes temporary area
 function ClearCoordsString() {
     coordsString = "";
     RemoveArea("tempArea", "map");
@@ -116,10 +116,14 @@ function EditTempArea() {
 
 
 // Hilights te areas of image map using JQuery plugin maphilight
+// Needs to be called after every change on Image map
 function Hilight() {
     $(function () {
         $('.map').maphilight({
-            fillColor: '008800',
+            fillColor: '555555',
+            fillOpacity: 0.35,
+            strokeColor: 'bbbbbb',
+            strokeWidth: 2,
             alwaysOn: true
         });
     });
