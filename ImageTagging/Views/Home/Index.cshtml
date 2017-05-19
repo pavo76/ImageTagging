@@ -4,7 +4,7 @@
 
 <h1>Application for testing out the image taggin logic</h1>
 <div>
-    <img id="slika" class="map" usemap="#map" onclick="imageOnClick()" src="http://images.all-free-download.com/images/graphiclarge/beautiful_scenery_04_hd_pictures_166258.jpg" />
+    <img id="slika" class="map" usemap="#map" onClick="imageOnClick(event); return false" onmousedown="return false" src="http://images.all-free-download.com/images/graphiclarge/beautiful_scenery_04_hd_pictures_166258.jpg" />
 </div>
 
 <map id="map" name="map">

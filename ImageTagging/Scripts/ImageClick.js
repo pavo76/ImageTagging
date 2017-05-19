@@ -6,8 +6,8 @@ var areaIDIndex = 0;
 // adds coordinates of clicked position in image to the coordsString variable
 // adds temporary area if temporary area with id="tempArea" doesn't exist
 // else it adds new coordinates to temporary area
-function imageOnClick(elementRef) {
-    var posObject = getEventLocation(event);
+function imageOnClick(eventRef) {
+    var posObject = getEventLocation(eventRef);
     if (coordsString == "") {
         coordsString = posObject.x + ", " + posObject.y;
     }
