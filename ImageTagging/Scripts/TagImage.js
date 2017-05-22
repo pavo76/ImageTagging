@@ -17,7 +17,7 @@ var circleRadius = 100;
 // if circle, it changes the coordinates of the circle and changes coordsString accordingly
 // adds temporary area if temporary area with id="tempArea" doesn't exist
 // else it adds new coordinates to temporary area
-function imageOnClick(eventRef) {
+function imageOnClick(eventRef, mapID) {
     var posObject = getEventLocation(eventRef);
     if (tagFormatPoly)
     {
@@ -35,7 +35,7 @@ function imageOnClick(eventRef) {
         coordsString = circleX + ", " + circleY + ", " + circleRadius;
     }
     if (!CheckIfAreaExists("tempArea")) {
-        AddTempArea("map")
+        AddTempArea(mapID)
     }
     else if (CheckIfAreaExists("tempArea")) {
         EditTempArea();
@@ -83,7 +83,7 @@ function ClearCoordsString() {
 // areaIDIndex autoincrements for each area added
 // removes temporary area with id="tempArea" from map
 // clears coordsString
-function AddArea(mapID) {
+function AddArea(mapID, areaID, areaTitle) {
     var map = document.getElementById(mapID);    
     area = document.createElement("area");
     if (tagFormatPoly) {
@@ -94,10 +94,9 @@ function AddArea(mapID) {
     }
     area.coords = coordsString;
     // test values, can be adjusted later
-    area.title = "da";
-    area.alt = "da";
-    var areaID = "area" + areaIDIndex;
-    area.setAttribute("id", areaID);
+    area.title = areaTitle;
+    var areaIDFull = areaID + areaIDIndex;
+    area.setAttribute("id", areaIDFull);
     map.appendChild(area);
 
     areaIDIndex += 1;
@@ -143,8 +142,7 @@ function AddTempArea(mapID) {
     }
     area.coords = coordsString;
     // test values, can be adjusted later
-    area.title = "da";
-    area.alt = "da";
+    area.title = "temp";
     area.setAttribute("id", "tempArea");
     map.appendChild(area);
     Hilight();
@@ -184,9 +182,9 @@ function Hilight() {
 
 // Switches between tagging with polygon and tagging with circle
 // Clears temporary area on switch
-function ChangeTagFormat()
+function ChangeTagFormat(buttonID, radiusDivID)
 {
-    var button = document.getElementById("btnChangeTagFormat");
+    var button = document.getElementById(buttonID);
     tagFormatPoly = !tagFormatPoly;
     ClearTempArea();
     if (tagFormatPoly)
@@ -197,24 +195,24 @@ function ChangeTagFormat()
     {
         button.setAttribute("value", "Polygon");
     }
-    ShowRadiusInput();
+    ShowRadiusInput(radiusDivID);
 }
 
 // Toggles visibility of the input for adjusting radius of circle tag
-function ShowRadiusInput()
+function ShowRadiusInput(radiusDivID)
 {
     if (tagFormatPoly) {
-        document.getElementById("radiusDiv").style.visibility = "hidden";
+        document.getElementById(radiusDivID).style.visibility = "hidden";
     }
     if (!tagFormatPoly) {
-        document.getElementById("radiusDiv").style.visibility = "visible";
+        document.getElementById(radiusDivID).style.visibility = "visible";
     }
 }
 
 // Changes the area of circle tag to match the adjusted radius
-function ChangeRadius()
+function ChangeRadius(radiusInputID)
 {
-    var radius=document.getElementById("nmbRadius").value;
+    var radius = document.getElementById(radiusInputID).value;
     circleRadius = radius;
     coordsString = circleX + ", " + circleY + ", " + circleRadius;
     if (CheckIfAreaExists("tempArea")) {
@@ -234,16 +232,19 @@ function ConnectArea(elementID, areaID)
     });
 }
 
-function AddCoordsToModel()
+
+// adds values of coordsString to the propery of a model
+function AddCoordsToModel(modelProperty)
 {
-    document.getElementById("areaCoords").value = coordsString;
+    document.getElementById(modelProperty).value = coordsString;
 }
 
-function AddShapeToModel() {
+// adds appropriate value of areaShape depending of tagFormatPoly field to the propery of a model
+function AddShapeToModel(modelProperty) {
     if (tagFormatPoly) {
-        document.getElementById("areaShape").value = "poly";
+        document.getElementById(modelProperty).value = "poly";
     }
     else if (!tagFormatPoly) {
-        document.getElementById("areaShape").value = "circle";
+        document.getElementById(modelProperty).value = "circle";
     }
 }

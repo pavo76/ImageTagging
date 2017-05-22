@@ -1,13 +1,13 @@
 ﻿@model ImageTagging.Models.Images
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Show image tag";
 }
 
-<h2>Details</h2>
+<h2>Show image tag area</h2>
 
 <div>
-    <h4>Images</h4>
+    <h4>Mouseover over part of image area or over tag to display tag area on image</h4>
     <hr />
     <div>
         <img class="map" src="@Model.imgURL" id="image" usemap="#map"/>
@@ -27,7 +27,7 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit image tag", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
 

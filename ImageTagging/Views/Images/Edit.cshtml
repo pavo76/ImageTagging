@@ -1,13 +1,13 @@
 ﻿@model ImageTagging.Models.Images
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit image tag";
 }
 
-<h2>Edit</h2>
+<h2>Edit tag's area of image</h2>
 
 <div>
-    <img class="map" src="@Model.imgURL" id="image" usemap="#map" onClick="imageOnClick(event); AddCoordsToModel()" onmousedown="return false" />
+    <img class="map" src="@Model.imgURL" id="image" usemap="#map" onClick="imageOnClick(event, 'map'); AddCoordsToModel('areaCoords')" onmousedown="return false" />
 </div>
 <map id="map" name="map">
 </map>
@@ -19,13 +19,13 @@
 <br/>
 <div class="row">
     <div class="col-md-3">Change tag format to:</div>
-    <input class="col-md-3" type="button" id="btnChangeTagFormat" onclick="ChangeTagFormat(); AddShapeToModel()" value="Circle" />
+    <input class="col-md-3" type="button" id="btnChangeTagFormat" onclick="ChangeTagFormat(this.id, 'radiusDiv'); AddShapeToModel(areaShape)" value="Circle" />
 </div>
 
 <br />
 <div class="row" id="radiusDiv" style="visibility:hidden">
     <div class="col-md-3">Adjust radius of circle tag:</div>
-    <input class="col-md-3" type="number" id="nmbRadius" min="5" onchange="ChangeRadius()" name="radius" value="100" step="5" />
+    <input class="col-md-3" type="number" id="nmbRadius" min="5" onchange="ChangeRadius(this.id)" name="radius" value="100" step="5" />
 </div>
 @using (Html.BeginForm())
 {
