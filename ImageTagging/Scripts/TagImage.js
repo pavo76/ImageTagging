@@ -221,3 +221,29 @@ function ChangeRadius()
         EditTempArea();
     }
 }
+
+// Connects element with id="elementeID" and area with id="areaID"
+function ConnectArea(elementID, areaID)
+{
+    elementID = "#" + elementID;
+    areaID="#"+areaID
+    $(elementID).mouseover(function (e) {
+        $(areaID).mouseover();
+    }).mouseout(function (e) {
+        $(areaID).mouseout();
+    });
+}
+
+function AddCoordsToModel()
+{
+    document.getElementById("areaCoords").value = coordsString;
+}
+
+function AddShapeToModel() {
+    if (tagFormatPoly) {
+        document.getElementById("areaShape").value = "poly";
+    }
+    else if (!tagFormatPoly) {
+        document.getElementById("areaShape").value = "circle";
+    }
+}

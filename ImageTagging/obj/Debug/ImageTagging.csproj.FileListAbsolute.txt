@@ -65,3 +65,7 @@ c:\users\dominik\documents\visual studio 2017\Projects\ImageTagging\ImageTagging
 c:\users\dominik\documents\visual studio 2017\Projects\ImageTagging\ImageTagging\obj\Debug\ImageTagging.csprojResolveAssemblyReference.cache
 c:\users\dominik\documents\visual studio 2017\Projects\ImageTagging\ImageTagging\obj\Debug\ImageTagging.dll
 c:\users\dominik\documents\visual studio 2017\Projects\ImageTagging\ImageTagging\obj\Debug\ImageTagging.pdb
+C:\Users\Dominik\documents\visual studio 2017\Projects\ImageTagging\ImageTagging\bin\EntityFramework.dll
+C:\Users\Dominik\documents\visual studio 2017\Projects\ImageTagging\ImageTagging\bin\EntityFramework.SqlServer.dll
+C:\Users\Dominik\documents\visual studio 2017\Projects\ImageTagging\ImageTagging\bin\EntityFramework.xml
+C:\Users\Dominik\documents\visual studio 2017\Projects\ImageTagging\ImageTagging\bin\EntityFramework.SqlServer.xml
