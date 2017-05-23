@@ -6,8 +6,8 @@
 
 <h2>Edit tag's area of image</h2>
 
-<div>
-    <img class="map" src="@Model.imgURL" id="image" usemap="#map" onClick="imageOnClick(event, 'map'); AddCoordsToModel('areaCoords')" onmousedown="return false" />
+<div style="width:1000px; height:600px">
+    <img class="map" style="width:auto; height:inherit" src="@Model.imgURL" id="image" usemap="#map" onClick="imageOnClick(event, 'map'); AddCoordsToModel('areaCoords', 'image')" onmousedown="return false" />
 </div>
 <map id="map" name="map">
 </map>
@@ -19,7 +19,7 @@
 <br/>
 <div class="row">
     <div class="col-md-3">Change tag format to:</div>
-    <input class="col-md-3" type="button" id="btnChangeTagFormat" onclick="ChangeTagFormat(this.id, 'radiusDiv'); AddShapeToModel(areaShape)" value="Circle" />
+    <input class="col-md-3" type="button" id="btnChangeTagFormat" onclick="ChangeTagFormat(this.id, 'radiusDiv'); AddShapeToModel('areaShape')" value="Circle" />
 </div>
 
 <br />
@@ -73,6 +73,6 @@
 <script src="~/Scripts/TagImage.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        AddShapeToModel();
+        AddShapeToModel('areaShape');
     });
 </script>

@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Show image tag";
+    ViewBag.coords = "";
 }
 
 <h2>Show image tag area</h2>
@@ -9,11 +10,11 @@
 <div>
     <h4>Mouseover over part of image area or over tag to display tag area on image</h4>
     <hr />
-    <div>
-        <img class="map" src="@Model.imgURL" id="image" usemap="#map"/>
+    <div style="width:500px; height:400px">
+        <img class="map" style="width:auto; height:inherit" src="@Model.imgURL"   id="image" usemap="#map"/>
     </div>
     <map id="map" name="map">
-        <area href="#" id="area" alt="da" title="da" shape="@Model.areaShape" coords="@Model.areaCoords" data-maphilight='{"alwaysOn":false}' />
+        <area href="#" id="area" alt="da" title="da" coords="CustomizeCoords(@Model.areaCoords, 'image')" shape="@Model.areaShape" data-maphilight='{"alwaysOn":false}' />
     </map>
     <dl class="dl-horizontal">
         <dt>
@@ -39,7 +40,7 @@
     $(document).ready(function () {
         Hilight();
         ConnectArea('tag', 'area');
-    });
+    });    
 </script>
 
 

@@ -25,7 +25,7 @@ function imageOnClick(eventRef, mapID) {
             coordsString = posObject.x + ", " + posObject.y;
         }
         else if (coordsString != "") {
-            coordsString = coordsString + ", " + posObject.x + ", " + posObject.y
+            coordsString = coordsString + ", " + posObject.x + ", " + posObject.y;   
         }
     }
     else if (!tagFormatPoly)
@@ -48,6 +48,7 @@ function getEventLocation(eventRef) {
     var positionX = 0;
     var positionY = 0;
     var $img = $(eventRef.target);
+    var img = document.getElementById("image");
     var offset = $img.offset();
     if (eventRef.pageX) {
         positionX = eventRef.pageX - offset.left;
@@ -233,10 +234,10 @@ function ConnectArea(elementID, areaID)
 }
 
 
-// adds values of coordsString to the propery of a model
-function AddCoordsToModel(modelProperty)
+// adds values of normalized coordsString to the propery of a model
+function AddCoordsToModel(modelProperty, imgID)
 {
-    document.getElementById(modelProperty).value = coordsString;
+    document.getElementById(modelProperty).value = NormalizeCoords(coordsString, imgID);
 }
 
 // adds appropriate value of areaShape depending of tagFormatPoly field to the propery of a model
@@ -248,3 +249,111 @@ function AddShapeToModel(modelProperty) {
         document.getElementById(modelProperty).value = "circle";
     }
 }
+
+// changes values of coordsString to match the coords of a natural size of a picture
+function NormalizeCoords(coords, imgID)
+{
+    var img = document.getElementById(imgID);
+    var imgX = img.clientWidth;
+    var imgY = img.clientHeight;
+    var imgXNormal = img.naturalWidth;
+    var imgYNormal = img.naturalHeight;
+    var coordsNormal = "";
+    if (coords != "")
+    {
+        if (tagFormatPoly)
+        {
+            var coordsArray = coords.split(", ");
+            for (i = 0; i < coordsArray.length; ++i) {
+                if (i % 2 == 0 || i==0) {
+                    var num = parseFloat(coordsArray[i]);
+                    if (i == 0) {
+                        coordsNormal = coordsNormal + ((num / imgX) * imgXNormal) + ", ";
+                    }
+                    else if (i > 0) {
+                        coordsNormal = coordsNormal + ", " + ((num / imgX) * imgXNormal) + ", ";
+                    }
+                }
+                else if (i % 2 == 1) {
+                    var num = parseFloat(coordsArray[i]);
+                    coordsNormal = coordsNormal + ((num / imgY) * imgYNormal);
+                }
+            }
+        }
+        if (!tagFormatPoly)
+        {
+            coordsNormal = "";
+            var imgD = Math.sqrt(imgX * imgX + imgY * imgY);
+            var imgDNormal = Math.sqrt(imgXNormal * imgXNormal + imgYNormal * imgYNormal);
+            var coordsArray = coords.split(", ");
+            for (i = 0; i < coordsArray.length; ++i)
+            {
+                var num = parseFloat(coordsArray[i]);
+                if (i == 0)
+                {
+                    coordsNormal = ((num / imgX) * imgXNormal + ", ");
+                }
+                if (i == 1) {
+                    coordsNormal = coordsNormal+((num / imgY) * imgYNormal + ", ");
+                }
+                if (i == 2) {
+                    coordsNormal = coordsNormal + ((num / imgD) * imgDNormal);
+                }
+            }
+        }
+    }
+    return coordsNormal;
+}
+
+// Takes the nomalized coords of an area and switches them to match 
+// the size of a shown picture
+function CustomizeCoords(coords, imgID) {
+    var img = document.getElementById(imgID);
+    var imgX = img.clientWidth;
+    var imgY = img.clientHeight;
+    var imgXNormal = img.naturalWidth;
+    var imgYNormal = img.naturalHeight;
+    var coordsCustom = "";
+    if (coords != "") {
+        if (tagFormatPoly)
+        {
+            var coordsArray = coords.split(", ");
+            for (i = 0; i < coordsArray.length; ++i) {
+                if (i % 2 == 0 || i == 0) {
+                    var num = parseFloat(coordsArray[i]);
+                    if (i == 0) {
+                        coordsCustom =  ((num / imgXNormal) * imgX) + ", ";
+                    }
+                    else if (i > 0) {
+                        coordsCustom = coordsCustom + ", " + ((num / imgXNormal) * imgX) + ", ";
+                    }
+                }
+                else if (i % 2 == 1) {
+                    var num = parseFloat(coordsArray[i]);
+                    coordsCustom = coordsCustom + ((num / imgYNormal) * imgY);
+                }
+            }
+        }
+        else if (!tagFormatPoly)
+        {
+            coordsCustom = "";
+            var imgD = Math.sqrt(imgX * imgX + imgY * imgY);
+            var imgDNormal = Math.sqrt(imgXNormal * imgXNormal + imgYNormal * imgYNormal);
+            var coordsArray = coords.split(", ");
+            for (i = 0; i < coordsArray.length; ++i) {
+                var num = parseFloat(coordsArray[i]);
+                if (i == 0) {
+                    coordsCustom = ((num / imgXNormal) * imgX + ", ");
+                }
+                if (i == 1) {
+                    coordsCustom = coordsCustom + ((num / imgYNormal) * imgY + ", ");
+                }
+                if (i == 2) {
+                    coordsCustom = coordsCustom + ((num / imgDNormal) * imgD);
+                }
+            }
+        }
+    }
+    return coordsCustom;
+}
+
