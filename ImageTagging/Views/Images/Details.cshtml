@@ -10,11 +10,11 @@
 <div>
     <h4>Mouseover over part of image area or over tag to display tag area on image</h4>
     <hr />
-    <div style="width:500px; height:400px">
-        <img class="map" style="width:auto; height:inherit" src="@Model.imgURL"   id="image" usemap="#map"/>
+    <div style="width:500px; height:300px">
+        <img class="map" style="width:auto;  height:inherit" id="image" onmouseover="AddCustomCoordsToArea('@Model.areaCoords', 'area', 'image')" src="@Model.imgURL" usemap="#map"/>
     </div>
-    <map id="map" name="map">
-        <area href="#" id="area" alt="da" title="da" coords="CustomizeCoords(@Model.areaCoords, 'image')" shape="@Model.areaShape" data-maphilight='{"alwaysOn":false}' />
+    <map id="map" name="map" >
+        <area href="#" id="area" alt="da" title="da"  shape="@Model.areaShape" data-maphilight='{"alwaysOn":false}' />
     </map>
     <dl class="dl-horizontal">
         <dt>

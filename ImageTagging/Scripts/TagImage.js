@@ -308,6 +308,7 @@ function NormalizeCoords(coords, imgID)
 // Takes the nomalized coords of an area and switches them to match 
 // the size of a shown picture
 function CustomizeCoords(coords, imgID) {
+    //alert(areaID);
     var img = document.getElementById(imgID);
     var imgX = img.clientWidth;
     var imgY = img.clientHeight;
@@ -357,3 +358,12 @@ function CustomizeCoords(coords, imgID) {
     return coordsCustom;
 }
 
+
+// Adds customized coords to an area with id=areaID over image with id=imgID
+// Coords passed in a function should be normalized
+function AddCustomCoordsToArea(normalizedCoords, areaID, imgID)
+{
+    var area = document.getElementById(areaID);
+    var coords = CustomizeCoords(normalizedCoords, imgID);
+    area.setAttribute("coords", coords);
+}
