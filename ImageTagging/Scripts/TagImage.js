@@ -308,7 +308,6 @@ function NormalizeCoords(coords, imgID)
 // Takes the nomalized coords of an area and switches them to match 
 // the size of a shown picture
 function CustomizeCoords(coords, imgID) {
-    //alert(areaID);
     var img = document.getElementById(imgID);
     var imgX = img.clientWidth;
     var imgY = img.clientHeight;

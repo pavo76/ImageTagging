@@ -1,0 +1,70 @@
+﻿@model IEnumerable<object>
+
+@{
+    ImageTagging.Models.ImageMulti image = Model.ToList()[0] as ImageTagging.Models.ImageMulti;
+    List<ImageTagging.Models.Tag> lstTags = Model.ToList()[1] as List<ImageTagging.Models.Tag>;
+}
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+<div style="width:1000px; height:500px">
+    <img class="map" style="width:auto; height:inherit" src="@image.URL" id="image" usemap="#map" onmousedown="return false" />
+</div>
+<map id="map" name="map"></map>
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>ImageMulti</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => image.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => image.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => image.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => image.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => image.URL, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => image.URL, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => image.URL, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Tags", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var tag in lstTags)
+                {
+                    <input type="radio" onselect="@tag." name="tag" value="@tag.Name"/>  @tag.Name
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/jquery.maphilight.js"></script>
+<script src="~/Scripts/TagImage.js"></script>

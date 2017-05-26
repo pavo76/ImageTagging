@@ -20,5 +20,9 @@ namespace ImageTagging.Models
         }
 
         public System.Data.Entity.DbSet<ImageTagging.Models.Images> Images { get; set; }
+
+        public System.Data.Entity.DbSet<ImageTagging.Models.ImageMulti> ImageMultis { get; set; }
+
+        public System.Data.Entity.DbSet<ImageTagging.Models.Tag> Tags { get; set; }
     }
 }

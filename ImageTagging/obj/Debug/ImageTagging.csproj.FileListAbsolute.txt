@@ -69,3 +69,8 @@ C:\Users\Dominik\documents\visual studio 2017\Projects\ImageTagging\ImageTagging
 C:\Users\Dominik\documents\visual studio 2017\Projects\ImageTagging\ImageTagging\bin\EntityFramework.SqlServer.dll
 C:\Users\Dominik\documents\visual studio 2017\Projects\ImageTagging\ImageTagging\bin\EntityFramework.xml
 C:\Users\Dominik\documents\visual studio 2017\Projects\ImageTagging\ImageTagging\bin\EntityFramework.SqlServer.xml
+C:\Users\Dominik\documents\visual studio 2017\Projects\ImageTagging\ImageTagging\obj\Debug\ImageTagging.Migrations.InitialCreate.resources
+C:\Users\Dominik\documents\visual studio 2017\Projects\ImageTagging\ImageTagging\obj\Debug\ImageTagging.csproj.GenerateResource.Cache
+C:\Users\Dominik\documents\visual studio 2017\Projects\ImageTagging\ImageTagging\obj\Debug\ImageTagging.Migrations.Multitag.resources
+C:\Users\Dominik\documents\visual studio 2017\Projects\ImageTagging\ImageTagging\obj\Debug\ImageTagging.Migrations.Tags.resources
+C:\Users\Dominik\documents\visual studio 2017\Projects\ImageTagging\ImageTagging\obj\Debug\ImageTagging.Migrations.TagFix.resources

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<object>
+
+@{ 
+    List<ImageTagging.Models.ImageMulti> lstImages = Model.ToList()[0] as List<ImageTagging.Models.ImageMulti>;
+    List<ImageTagging.Models.Tag> lstTags = Model.ToList()[1] as List<ImageTagging.Models.Tag>;
+}
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            URL
+        </th>
+        <th>
+            Tags
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in lstImages) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.URL)
+        </td>
+        <td>
+            @foreach (var tag in lstTags)
+            {
+                if(item.Id==tag.ImageMultiId)
+                {
+                    @Html.Raw(tag.Name+"; ")
+                }
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

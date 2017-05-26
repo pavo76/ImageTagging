@@ -148,12 +148,33 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImageMultisController.cs" />
     <Compile Include="Controllers\ImagesController.cs" />
+    <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705220913369_InitialCreate.cs" />
+    <Compile Include="Migrations\201705220913369_InitialCreate.Designer.cs">
+      <DependentUpon>201705220913369_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705260655163_Multitag.cs" />
+    <Compile Include="Migrations\201705260655163_Multitag.Designer.cs">
+      <DependentUpon>201705260655163_Multitag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705260704259_Tags.cs" />
+    <Compile Include="Migrations\201705260704259_Tags.Designer.cs">
+      <DependentUpon>201705260704259_Tags.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705260708509_TagFix.cs" />
+    <Compile Include="Migrations\201705260708509_TagFix.Designer.cs">
+      <DependentUpon>201705260708509_TagFix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ImageMulti.cs" />
     <Compile Include="Models\Images.cs" />
     <Compile Include="Models\ImageTaggingContext.cs" />
+    <Compile Include="Models\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +220,16 @@
     <Content Include="Views\Images\Details.cshtml" />
     <Content Include="Views\Images\Edit.cshtml" />
     <Content Include="Views\Images\Index.cshtml" />
+    <Content Include="Views\ImageMultis\Create.cshtml" />
+    <Content Include="Views\ImageMultis\Delete.cshtml" />
+    <Content Include="Views\ImageMultis\Details.cshtml" />
+    <Content Include="Views\ImageMultis\Edit.cshtml" />
+    <Content Include="Views\ImageMultis\Index.cshtml" />
+    <Content Include="Views\Tags\Create.cshtml" />
+    <Content Include="Views\Tags\Delete.cshtml" />
+    <Content Include="Views\Tags\Details.cshtml" />
+    <Content Include="Views\Tags\Edit.cshtml" />
+    <Content Include="Views\Tags\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -214,6 +245,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201705220913369_InitialCreate.resx">
+      <DependentUpon>201705220913369_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705260655163_Multitag.resx">
+      <DependentUpon>201705260655163_Multitag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705260704259_Tags.resx">
+      <DependentUpon>201705260704259_Tags.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705260708509_TagFix.resx">
+      <DependentUpon>201705260708509_TagFix.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
