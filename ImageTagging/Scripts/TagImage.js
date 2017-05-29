@@ -366,3 +366,11 @@ function AddCustomCoordsToArea(normalizedCoords, areaID, imgID)
     var coords = CustomizeCoords(normalizedCoords, imgID);
     area.setAttribute("coords", coords);
 }
+
+
+
+// Adds value to the modelProperty 
+function AddValueToProperty(modelProperty, value)
+{
+    document.getElementById(modelProperty).value = value;
+}

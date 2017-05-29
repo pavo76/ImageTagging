@@ -1,9 +1,5 @@
-﻿@model IEnumerable<object>
+﻿@model ImageTagging.Models.viewModelMultiImage
 
-@{
-    ImageTagging.Models.ImageMulti image = Model.ToList()[0] as ImageTagging.Models.ImageMulti;
-    List<ImageTagging.Models.Tag> lstTags = Model.ToList()[1] as List<ImageTagging.Models.Tag>;
-}
 
 @{
     ViewBag.Title = "Edit";
@@ -11,11 +7,26 @@
 
 <h2>Edit</h2>
 <div style="width:1000px; height:500px">
-    <img class="map" style="width:auto; height:inherit" src="@image.URL" id="image" usemap="#map" onmousedown="return false" />
+    <img class="map" style="width:auto; height:inherit" src="@Model.image[0].URL" id="image" usemap="#map" onmousedown="return false" onClick="imageOnClick(event, 'map'); AddCoordsToModel('AreaCoords', 'image')" />
 </div>
 <map id="map" name="map"></map>
 <br />
+<br />
+<div class="row">
+    <div class="col-md-3">Clear current input:</div>
+    <input class="col-md-3" type="button" id="btnClear" onclick="ClearTempArea()" value="Clear" />
+</div>
+<br />
+<div class="row">
+    <div class="col-md-3">Change tag format to:</div>
+    <input class="col-md-3" type="button" id="btnChangeTagFormat" onclick="ChangeTagFormat(this.id, 'radiusDiv'); AddShapeToModel('AreaShape')" value="Circle" />
+</div>
 
+<br />
+<div class="row" id="radiusDiv" style="visibility:hidden">
+    <div class="col-md-3">Adjust radius of circle tag:</div>
+    <input class="col-md-3" type="number" id="nmbRadius" min="5" onchange="ChangeRadius(this.id);AddCoordsToModel('AreaCoords', 'image')" name="radius" value="100" step="5" />
+</div>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -24,29 +35,34 @@
         <h4>ImageMulti</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => image.Id)
+        @Html.HiddenFor(model => Model.image[0].Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => image.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => @Model.image[0].Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => image.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => image.Name, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => @Model.image[0].Name, new { htmlAttributes = new { @class = "form-control", @Value = @Model.image[0].Name } })
+                @Html.ValidationMessageFor(model => @Model.image[0].Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => image.URL, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => @Model.image[0].URL, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => image.URL, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => image.URL, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => @Model.image[0].URL, new { htmlAttributes = new { @class = "form-control", @Value = @Model.image[0].URL } })
+                @Html.ValidationMessageFor(model => @Model.image[0].URL, "", new { @class = "text-danger" })
             </div>
         </div>
+        @Html.HiddenFor(model => Model.tags[0].Id, new { @id = "ID" })
+        @Html.HiddenFor(model => Model.tags[0].Name, new { @id = "Name" })
+        @Html.HiddenFor(model => Model.tags[0].AreaShape, new { @id="AreaShape"})
+        @Html.HiddenFor(model => Model.tags[0].AreaCoords, new { @id = "AreaCoords"})
+        @Html.HiddenFor(model => Model.tags[0].ImageMultiId)
         <div class="form-group">
             @Html.Label("Tags", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @foreach (var tag in lstTags)
+                @foreach (var tag in Model.tags)
                 {
-                    <input type="radio" onselect="@tag." name="tag" value="@tag.Name"/>  @tag.Name
+                    <input type="radio" onclick="AddValueToProperty('ID', @tag.Id); AddValueToProperty('Name', '@tag.Name')" name="tag" value="@tag.Name"/>  @tag.Name
                 }
             </div>
         </div>
@@ -68,3 +84,8 @@
 @Scripts.Render("~/bundles/jquery")
 <script src="~/Scripts/jquery.maphilight.js"></script>
 <script src="~/Scripts/TagImage.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        AddShapeToModel('AreaShape');
+    });
+</script>

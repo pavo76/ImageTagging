@@ -1,9 +1,6 @@
-﻿@model IEnumerable<object>
+﻿@model ImageTagging.Models.viewModelMultiImage
 
-@{ 
-    List<ImageTagging.Models.ImageMulti> lstImages = Model.ToList()[0] as List<ImageTagging.Models.ImageMulti>;
-    List<ImageTagging.Models.Tag> lstTags = Model.ToList()[1] as List<ImageTagging.Models.Tag>;
-}
+
 @{
     ViewBag.Title = "Index";
 }
@@ -27,7 +24,7 @@
         <th></th>
     </tr>
 
-@foreach (var item in lstImages) {
+@foreach (var item in Model.image) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -36,7 +33,7 @@
             @Html.DisplayFor(modelItem => item.URL)
         </td>
         <td>
-            @foreach (var tag in lstTags)
+            @foreach (var tag in Model.tags)
             {
                 if(item.Id==tag.ImageMultiId)
                 {

@@ -175,6 +175,7 @@
     <Compile Include="Models\Images.cs" />
     <Compile Include="Models\ImageTaggingContext.cs" />
     <Compile Include="Models\Tag.cs" />
+    <Compile Include="Models\viewModelMultiImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

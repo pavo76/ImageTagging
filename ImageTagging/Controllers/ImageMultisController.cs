@@ -16,11 +16,11 @@ namespace ImageTagging.Controllers
 
         // GET: ImageMultis
         public ActionResult Index()
-        {            
-            List<object> model = new List<object>();
-            model.Add(db.ImageMultis.ToList());
-            model.Add(db.Tags.ToList());
-            return View(model);
+        {
+            viewModelMultiImage vmMultiImage = new viewModelMultiImage();
+            vmMultiImage.image = db.ImageMultis.ToList();
+            vmMultiImage.tags = db.Tags.ToList();
+            return View(vmMultiImage);
         }
 
         // GET: ImageMultis/Details/5
@@ -30,12 +30,10 @@ namespace ImageTagging.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ImageMulti imageMulti = db.ImageMultis.Find(id);
-            if (imageMulti == null)
-            {
-                return HttpNotFound();
-            }
-            return View(imageMulti);
+            viewModelMultiImage vmMultiImage = new viewModelMultiImage();
+            vmMultiImage.image = db.ImageMultis.Where(i => i.Id == id).ToList();
+            vmMultiImage.tags = db.Tags.Where(tag => tag.ImageMultiId == id).ToList();
+            return View(vmMultiImage);
         }
 
         // GET: ImageMultis/Create
@@ -68,15 +66,12 @@ namespace ImageTagging.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            List<object> model = new List<object>();
-            ImageMulti imageMulti = db.ImageMultis.Find(id);
-            if (imageMulti == null)
-            {
-                return HttpNotFound();
-            }
-            model.Add(imageMulti);
-            model.Add(db.Tags.Where(tag => tag.ImageMultiId == id).ToList());
-            return View(model);
+            viewModelMultiImage vmMultiImage = new viewModelMultiImage();
+            vmMultiImage.image = db.ImageMultis.Where(i => i.Id == id).ToList();
+            vmMultiImage.tags = db.Tags.Where(tag => tag.ImageMultiId == id).ToList();
+            //model.Add(imageMulti);
+            //model.Add(db.Tags.Where(tag => tag.ImageMultiId == id).ToList());
+            return View(vmMultiImage);
         }
 
         // POST: ImageMultis/Edit/5
@@ -84,15 +79,16 @@ namespace ImageTagging.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,URL")] ImageMulti imageMulti)
+        public ActionResult Edit(viewModelMultiImage vmMultiImage)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(imageMulti).State = EntityState.Modified;
+                db.Entry(vmMultiImage.image[0]).State = EntityState.Modified;
+                db.Entry(vmMultiImage.tags[0]).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(imageMulti);
+            return View(vmMultiImage);
         }
 
         // GET: ImageMultis/Delete/5

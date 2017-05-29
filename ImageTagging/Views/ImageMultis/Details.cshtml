@@ -1,4 +1,4 @@
-﻿@model ImageTagging.Models.ImageMulti
+﻿@model ImageTagging.Models.viewModelMultiImage
 
 @{
     ViewBag.Title = "Details";
@@ -9,26 +9,52 @@
 <div>
     <h4>ImageMulti</h4>
     <hr />
+    <div style="width:800px; height:300px">
+        <img class="map" style="width:auto;  height:inherit" id="image"  src="@Model.image[0].URL" usemap="#map" />
+    </div>
+    <map id="map" name="map">
+        @foreach (var tag in Model.tags)
+        {
+            <area href="#" id="@tag.Name" alt="@tag.Name" title="@tag.Name" shape="@tag.AreaShape"  data-maphilight='{"alwaysOn":false}' />
+            
+        }
+    </map>    
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => Model.image[0].Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.URL)
-        </dt>
-
+            @Html.DisplayFor(model => Model.image[0].Name)
+        </dd>    
+        <dt>Tags</dt>
         <dd>
-            @Html.DisplayFor(model => model.URL)
+            @foreach(var tag in Model.tags)
+            {
+                <div id=@String.Format("tag"+tag.Name)>
+                    @Html.Raw(tag.Name)
+                </div>
+            }
         </dd>
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.image[0].Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/jquery.maphilight.js"></script>
+<script src="~/Scripts/TagImage.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        Hilight();
+    });
+</script>
+@foreach (var tag in Model.tags)
+{
+    <script type="text/javascript">
+        AddCustomCoordsToArea('@tag.AreaCoords', '@tag.Name', 'image');
+        ConnectArea('tag'+'@tag.Name', '@tag.Name');
+    </script>
+}
